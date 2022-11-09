@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5371016352898339181}
   - component: {fileID: 9171028032756281682}
   - component: {fileID: 534275036977589310}
+  - component: {fileID: 3434015749534046904}
   m_Layer: 0
   m_Name: Ruby
   m_TagString: Player
@@ -177,6 +178,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputs: {fileID: 11400000, guid: 5ce4aa1fb8c30f2448099ecb465a4117, type: 2}
+--- !u!114 &3434015749534046904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890602416690814228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5f55673406356d40b8c021d6d704cbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 4
+  jumpVelocity: 4
+  jumpRealesedDecreaseVelocity: 2
+  coyoteTime: 0.2
 --- !u!1 &7635272380989173469
 GameObject:
   m_ObjectHideFlags: 0

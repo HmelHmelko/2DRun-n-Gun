@@ -9,7 +9,6 @@ namespace Utility
         [SerializeField] float width = 0.1f;
         [SerializeField] float height = 0.1f;
         [SerializeField] LayerMask groundLayer;
-
         public bool Check()
         {
             return Physics2D.OverlapCapsule(transform.position, new Vector2(width, height),CapsuleDirection2D.Horizontal, 0, groundLayer);

@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Interfaces;
+using UnityEditorInternal;
 
 namespace RubyGameplay
 {
@@ -9,7 +9,6 @@ namespace RubyGameplay
         [Header("Movement Settings")]
         [SerializeField] float movementSpeed = 5.0f;
 
-
         [Header("Jump Settings")]
         [SerializeField] float jumpVelocity = 4.0f;
         [SerializeField] float jumpRealesedDecreaseVelocity = 2.0f;
@@ -17,7 +16,7 @@ namespace RubyGameplay
         private float coyoteTimeCounter;
         private bool isJumping;
         private bool jumpInput;
-        private bool jumpInputRealesed;
+        private bool jumpInputReleased;
 
         [Header("Ground check")]
         [SerializeField] private GameObject groundCheckObject;
@@ -33,6 +32,9 @@ namespace RubyGameplay
         private int grounded;
         private int inAir;
         private int jumping;
+
+        public Vector2 _velocity { get; protected set; }
+        public Rigidbody2D _rubyRigidbody2D { get { return _rb; } }
 
         private void Awake()
         {
@@ -56,13 +58,17 @@ namespace RubyGameplay
         {
             //Inputs Check
             jumpInput = _controller.inputs.HandleJumpInput();
-            jumpInputRealesed = _controller.inputs.HandleJumpReleased();
+            jumpInputReleased = _controller.inputs.HandleJumpReleased();
 
-            MovementUpdate();
             AnimationUpdate();
             Jump();
+            AirGliding();
             CoyoteTimerCheck();
+            MovementUpdate();
+        }
 
+        private void FixedUpdate()
+        {
         }
 
         //Time before player start falling and still can jump
@@ -77,6 +83,20 @@ namespace RubyGameplay
                 coyoteTimeCounter -= Time.deltaTime;
             }
         }
+
+        private void AirGliding()
+        {
+            if(jumpInputReleased && !isGrounded())
+            {
+                //Debug.Log("We can gliding");
+                if(Input.GetButtonDown("Jump"))
+                {
+                    _rb.gravityScale = 0;
+                    //Debug.Log("actually gliding");
+                }
+            }
+        }
+        
         private void Jump()
         {
             if(jumpInput && coyoteTimeCounter > 0)
@@ -85,7 +105,7 @@ namespace RubyGameplay
                 isJumping = true;
                 jumpInput = false;
             }
-            if(jumpInputRealesed && _rb.velocity.y > 0)
+            if(jumpInputReleased && _rb.velocity.y > 0)
             {
                 _rb.velocity = new Vector2(_rb.velocity.x, _rb.velocity.y / jumpRealesedDecreaseVelocity);
                 coyoteTimeCounter = 0f;
@@ -96,21 +116,12 @@ namespace RubyGameplay
             }
         }
 
-        private void FixedUpdate()
-        {
-        }
-
         public bool isGrounded()
         {
             return _groundCheck.Check();
         }
 
-/*        public void SetHorizontalMove(float value)
-        {
-            _rb.velocity = new Vector2(value, _rb.velocity.y);
-        }*/
-
-        private void MovementUpdate()
+        public void MovementUpdate()
         {
             _rb.velocity = new Vector2(movementSpeed, _rb.velocity.y);
         }
