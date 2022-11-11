@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
-using UnityEngine;
-
 public class PlayerRunState : PlayerGroundedState
-{
+{   private bool dashInput;
     public PlayerRunState(Player player, PlayerStateMachine playerStateMachine, PlayerData playerData, string animBoolName) : base(player, playerStateMachine, playerData, animBoolName)
     {
     }
@@ -28,10 +23,17 @@ public class PlayerRunState : PlayerGroundedState
     {
         base.LogicUpdate();
 
-        //Proverka razvorota na 180 na buduwee, neobhodimo peredat parametr
-        //_player.CheckIfShouldFlip();
+        dashInput = _player.playerInputHandler.dashInput;
 
-        _player.SetVelocityX(_playerData.movementVelocity);
+        if (dashInput && _player.dashState.CanDash())
+        {
+            _player.playerInputHandler.UseDashInput();
+            _playerStateMachine.ChangeState(_player.dashState);
+        }
+        else if(!dashInput)
+        {
+            _player.SetVelocityX(_playerData.movementVelocity);
+        }
 
     }
 

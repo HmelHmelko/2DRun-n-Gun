@@ -1,13 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class PlayerGroundedState : PlayerState
 {
-    protected bool inputs;
     private bool jumpInput;
     private bool isGrounded;
-
     public PlayerGroundedState(Player player, PlayerStateMachine playerStateMachine, PlayerData playerData, string animBoolName) : base(player, playerStateMachine, playerData, animBoolName)
     {
     }
@@ -46,9 +40,7 @@ public class PlayerGroundedState : PlayerState
             _player.airState.StartCoyoteTime();
             _playerStateMachine.ChangeState(_player.airState);
         }
-
     }
-
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();

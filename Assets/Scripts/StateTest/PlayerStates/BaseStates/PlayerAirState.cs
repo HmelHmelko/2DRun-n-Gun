@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XInput;
 
 public class PlayerAirState : PlayerState
 {
+    //Inputs
     protected bool inputs;
     private bool jumpInput;
     private bool jumpInputStop;
     private bool glidingInput;
-    
+    private bool dashInput;
+
+    //Checks
     private bool isGrounded;
-    private bool isJumping; 
+    private bool isJumping;
     private bool coyoteTime;
 
     public PlayerAirState(Player player, PlayerStateMachine playerStateMachine, PlayerData playerData, string animBoolName) : base(player, playerStateMachine, playerData, animBoolName)
@@ -41,6 +45,7 @@ public class PlayerAirState : PlayerState
 
         jumpInput = _player.playerInputHandler.jumpInput;
         jumpInputStop = _player.playerInputHandler.jumpInputStop;
+        dashInput = _player.playerInputHandler.dashInput;
 
         CheckJumpMultiplier();
 
@@ -50,21 +55,24 @@ public class PlayerAirState : PlayerState
         }
         else if(jumpInput && _player.jumpState.CanJump())
         {
+            _player.playerInputHandler.UseJumpInput();
             _playerStateMachine.ChangeState(_player.jumpState);
+        }
+        else if(dashInput && _player.dashState.CanDash())
+        {
+            _player.playerInputHandler.UseDashInput();
+            _playerStateMachine.ChangeState(_player.dashState);
         }
         else
         {
             _player.SetVelocityX(_playerData.movementVelocity);
-
             _player.animator.SetFloat("yVelocity", _player.currentVelocity.y);
         }
     }
-
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
     }
-
     private void CheckJumpMultiplier()
     {
         if (isJumping)
@@ -80,7 +88,6 @@ public class PlayerAirState : PlayerState
             }
         }
     }
-
     private void CheckCoyoteTime()
     {
         if (coyoteTime && Time.time > startTime + _playerData.coyoteTime)

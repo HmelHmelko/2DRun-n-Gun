@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerJumpState : PlayerAbilityState
@@ -21,6 +19,10 @@ public class PlayerJumpState : PlayerAbilityState
         isAbilityDone = true;
         numberOfJumpsLeft--;
     }
+    public override void Exit()
+    {
+        base.Exit();
+    }
 
     public bool CanJump()
     {
@@ -37,5 +39,4 @@ public class PlayerJumpState : PlayerAbilityState
     public void ResetNumberOfJumps() => numberOfJumpsLeft = _playerData.numberOfJumps;
 
     public void DecreaseNumberOfJumpsLeft() => numberOfJumpsLeft--;
-
 }

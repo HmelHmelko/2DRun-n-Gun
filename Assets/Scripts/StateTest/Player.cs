@@ -1,7 +1,4 @@
 using Interfaces;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -19,6 +16,7 @@ public class Player : MonoBehaviour
     public PlayerRunState runState { get; private set; }
     public PlayerJumpState jumpState { get; private set; }
     public PlayerGlidingState glidingState { get; private set; }
+    public PlayerDashState dashState { get; private set; }
     #endregion
 
     #region Components
@@ -48,7 +46,8 @@ public class Player : MonoBehaviour
         runState = new PlayerRunState(this,stateMachine, playerData, "Run");
         jumpState = new PlayerJumpState(this, stateMachine, playerData, "inAir");
         airState = new PlayerAirState(this, stateMachine, playerData, "inAir");
-        glidingState = new PlayerGlidingState(this, stateMachine, playerData, "Gliding");
+        glidingState = new PlayerGlidingState(this, stateMachine, playerData, "Glide");
+        dashState = new PlayerDashState(this, stateMachine, playerData, "Dash");
     }
 
     private void Start()
@@ -89,23 +88,21 @@ public class Player : MonoBehaviour
         rb2D.velocity = moveVector;
         currentVelocity = moveVector;
     }
+
+    public void SetVelocity(float velocityX, float velocityY)
+    {
+        moveVector.Set(velocityX, velocityY);
+        rb2D.velocity = moveVector;
+        currentVelocity = moveVector;
+    }
+    
+    public void SetForce(Vector2 force)
+    {
+        rb2D.AddForce(force, ForceMode2D.Impulse);
+    }
     #endregion
 
     #region Check Functions
-
-    public void CheckIfShouldFlip(int input)
-    {
-        if(input != 0 && input != facingDirection)
-        {
-            Flip();
-        }
-    }
-    private void Flip()
-    {
-        facingDirection *= 1;
-        transform.Rotate(0.0f, 180.0f, 0.0f);
-    }
-
     public bool isGrounded()
     {
         return _groundCheck.Check();

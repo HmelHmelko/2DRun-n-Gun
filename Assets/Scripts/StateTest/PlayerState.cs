@@ -14,6 +14,7 @@ public class PlayerState
 
 
     protected bool isAnimationFinished;
+    protected bool isExitingState;
 
     public PlayerState(Player player, PlayerStateMachine playerStateMachine, PlayerData playerData, string animBoolName)
     {
@@ -30,6 +31,7 @@ public class PlayerState
         startTime = Time.time;
 
         isAnimationFinished = false;
+        isExitingState = false;
 
         Debug.Log(animBoolName);
     }
@@ -53,6 +55,7 @@ public class PlayerState
     public virtual void Exit()
     {
         _player.animator.SetBool(animBoolName, false);
+        isExitingState = true;
     }
 
     public virtual void AnimationTrigger()
