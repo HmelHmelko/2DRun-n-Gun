@@ -18,7 +18,7 @@ MonoBehaviour:
   dashTime: 0.4
   dashVelocityMultiplier: 4
   dashCooldown: 5
-  glideVelocityMultiplier: 1.2
+  glideVelocityMultiplier: 1.1
   jumpRealesedDecreaseVelocity: 2
   coyoteTime: 0.2
   jumpVelocityMultiplier: 0.5

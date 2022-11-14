@@ -65,11 +65,12 @@ public class PlayerAirState : PlayerState
         }
         else if(glidingInput && !isGrounded && _player.currentVelocity.y <= 0)
         {
-            isGliding = true;
+            SetIsGliding();
             _playerStateMachine.ChangeState(_player.glidingState);
         }
         else
         {
+            isGliding = false;
             _player.SetVelocityX(_playerData.movementVelocity);
             _player.animator.SetFloat("yVelocity", _player.currentVelocity.y);
         }
