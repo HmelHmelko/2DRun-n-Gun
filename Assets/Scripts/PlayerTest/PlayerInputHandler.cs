@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -16,14 +14,17 @@ public class PlayerInputHandler : MonoBehaviour
 
     #region localVariables
     [SerializeField] private float inputHoldTime = 0.2f;
+    [SerializeField] private float inputHoldTimerBeforeStartGlide = 0.2f;
     private float jumpInputStartTime;
-    private float dashInputAfterTime;
+    private bool glideInputStart;
+    private float glideInputCounterTimer;
     #endregion
 
     #region UnityEngine Shit
     private void Update()
     {
         CheckJumpInputHoldTime();
+        CheckGlideInputHoldTime();
     }
 
     public float OnMoveInput()
@@ -56,19 +57,34 @@ public class PlayerInputHandler : MonoBehaviour
             dashInput = false;
         }
     }
-
     public void OnGlideInput(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            glidingInput = true;
+            glideInputStart = true;
         }
         else if (context.canceled)
         {
             glidingInput = false;
+            glideInputStart = false;
         }
     }
     
+    private void CheckGlideInputHoldTime()
+    {
+        if(glideInputStart)
+        {
+            glideInputCounterTimer -= Time.deltaTime;
+            if(glideInputCounterTimer <= 0.01f)
+            {
+                glidingInput = true;
+            }
+        }
+        else
+        {
+            glideInputCounterTimer = inputHoldTimerBeforeStartGlide;
+        }
+    }
     private void CheckJumpInputHoldTime()
     {
         if(Time.time >= jumpInputStartTime + inputHoldTime)

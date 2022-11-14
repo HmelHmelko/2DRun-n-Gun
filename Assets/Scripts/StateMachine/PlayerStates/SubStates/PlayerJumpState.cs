@@ -2,12 +2,10 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerAbilityState
 {
-    private float jumpRealesedDecreaseVelocity;
     private int numberOfJumpsLeft;
 
     public PlayerJumpState(Player player, PlayerStateMachine playerStateMachine, PlayerData playerData, string animBoolName) : base(player, playerStateMachine, playerData, animBoolName)
     {
-        jumpRealesedDecreaseVelocity = playerData.jumpRealesedDecreaseVelocity;
         numberOfJumpsLeft = playerData.numberOfJumps;
     }
     public override void Enter()

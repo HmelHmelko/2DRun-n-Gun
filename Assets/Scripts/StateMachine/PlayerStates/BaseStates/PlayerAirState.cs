@@ -63,7 +63,7 @@ public class PlayerAirState : PlayerState
             _player.playerInputHandler.UseDashInput();
             _playerStateMachine.ChangeState(_player.dashState);
         }
-        else if(glidingInput && !isGrounded && _player.currentVelocity.y <= 0)
+        else if(glidingInput && !isGrounded && _player.currentVelocity.y < 0.01f)
         {
             SetIsGliding();
             _playerStateMachine.ChangeState(_player.glidingState);

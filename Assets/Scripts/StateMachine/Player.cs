@@ -4,9 +4,8 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     #region References
-    [SerializeField]
-    private PlayerData playerData;
-    public GameObject groundCheckObject;
+    [SerializeField] private PlayerData playerData;
+    [SerializeField] private GameObject groundCheckObject;
     #endregion
 
     #region State machine variables

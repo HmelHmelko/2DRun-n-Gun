@@ -44,14 +44,14 @@ public class PlayerRunState : PlayerState
             _player.playerInputHandler.UseDashInput();
             _playerStateMachine.ChangeState(_player.dashState);
         }
-        else if(!dashInput)
-        {
-            _player.SetVelocityX(_playerData.movementVelocity);
-        }
         else if(!isGrounded)
         {
             _player.airState.StartCoyoteTime();
             _playerStateMachine.ChangeState(_player.airState);
+        }
+        else
+        {
+            _player.SetVelocityX(_playerData.movementVelocity);
         }
 
     }

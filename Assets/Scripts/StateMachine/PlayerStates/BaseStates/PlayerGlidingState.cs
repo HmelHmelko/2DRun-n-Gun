@@ -10,10 +10,10 @@ public class PlayerGlidingState : PlayerState
     //Checks
     private bool isGlide;
     private bool isGrounded;
-    private float glideVelocityMultiplier;
+    private float glideVelocity;
     public PlayerGlidingState(Player player, PlayerStateMachine playerStateMachine, PlayerData playerData, string animBoolName) : base(player, playerStateMachine, playerData, animBoolName)
     {
-        glideVelocityMultiplier = playerData.glideVelocityMultiplier;
+        glideVelocity = playerData.glideVelocity;
     }
 
     public override void DoCheck()
@@ -56,7 +56,7 @@ public class PlayerGlidingState : PlayerState
         else
         {
             _player.SetVelocityX(_playerData.movementVelocity);
-            _player.SetVelocityY(_player.currentVelocity.y / glideVelocityMultiplier);
+            _player.SetVelocityY(-(glideVelocity));
             _player.animator.SetBool("Glide",isGlide);
         }
     }
