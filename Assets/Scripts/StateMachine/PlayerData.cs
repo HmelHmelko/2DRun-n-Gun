@@ -15,6 +15,9 @@ public class PlayerData : ScriptableObject
     public float dashVelocityMultiplier = 2.0f;
     public float dashCooldown = 5.0f;
 
+    [Header("Glide State")]
+    public float glideVelocityMultiplier = 2.0f;
+
     [Header("Air State")]
     public float jumpRealesedDecreaseVelocity = 2.0f;
     public float coyoteTime = 0.2f;

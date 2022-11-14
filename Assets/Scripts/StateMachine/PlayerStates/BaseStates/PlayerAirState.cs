@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XInput;
 
@@ -15,6 +13,7 @@ public class PlayerAirState : PlayerState
     //Checks
     private bool isGrounded;
     private bool isJumping;
+    public bool isGliding { get; private set; }
     private bool coyoteTime;
 
     public PlayerAirState(Player player, PlayerStateMachine playerStateMachine, PlayerData playerData, string animBoolName) : base(player, playerStateMachine, playerData, animBoolName)
@@ -46,6 +45,7 @@ public class PlayerAirState : PlayerState
         jumpInput = _player.playerInputHandler.jumpInput;
         jumpInputStop = _player.playerInputHandler.jumpInputStop;
         dashInput = _player.playerInputHandler.dashInput;
+        glidingInput = _player.playerInputHandler.glidingInput;
 
         CheckJumpMultiplier();
 
@@ -53,7 +53,7 @@ public class PlayerAirState : PlayerState
         {
             _playerStateMachine.ChangeState(_player.runState);
         }
-        else if(jumpInput && _player.jumpState.CanJump())
+        else if(isGrounded && jumpInput && _player.jumpState.CanJump())
         {
             _player.playerInputHandler.UseJumpInput();
             _playerStateMachine.ChangeState(_player.jumpState);
@@ -62,6 +62,11 @@ public class PlayerAirState : PlayerState
         {
             _player.playerInputHandler.UseDashInput();
             _playerStateMachine.ChangeState(_player.dashState);
+        }
+        else if(glidingInput && !isGrounded && _player.currentVelocity.y <= 0)
+        {
+            isGliding = true;
+            _playerStateMachine.ChangeState(_player.glidingState);
         }
         else
         {
@@ -98,5 +103,6 @@ public class PlayerAirState : PlayerState
     }
     public void StartCoyoteTime() => coyoteTime = true;
     public void SetIsJumping() => isJumping = true;
+    public void SetIsGliding() => isGliding = true;
 
 }

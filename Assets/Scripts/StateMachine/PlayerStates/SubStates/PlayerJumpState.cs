@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerAbilityState
 {
-    float jumpRealesedDecreaseVelocity;
+    private float jumpRealesedDecreaseVelocity;
     private int numberOfJumpsLeft;
 
     public PlayerJumpState(Player player, PlayerStateMachine playerStateMachine, PlayerData playerData, string animBoolName) : base(player, playerStateMachine, playerData, animBoolName)

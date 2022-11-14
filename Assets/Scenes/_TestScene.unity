@@ -541,7 +541,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7805985832046228866, guid: ea8c566a63de94e44ac1f0ee6fd60750, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 2.152529
       objectReference: {fileID: 0}
     - target: {fileID: 7805985832046228866, guid: ea8c566a63de94e44ac1f0ee6fd60750, type: 3}
       propertyPath: m_LocalScale.y
@@ -553,7 +553,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7805985832046228866, guid: ea8c566a63de94e44ac1f0ee6fd60750, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.95
+      value: 25.4487
       objectReference: {fileID: 0}
     - target: {fileID: 7805985832046228866, guid: ea8c566a63de94e44ac1f0ee6fd60750, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1171,6 +1171,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 846119e9-0ca2-4c3b-bb6f-f29c03829885
     m_ActionName: Gameplay/Dash[/Keyboard/f,/Keyboard/upArrow,/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1527546727}
+        m_TargetAssemblyTypeName: PlayerInputHandler, Assembly-CSharp
+        m_MethodName: OnGlideInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 383ee47f-d800-4545-9ed4-04535b689a04
+    m_ActionName: Gameplay/Glide[/Keyboard/space,/Keyboard/upArrow]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: MouseKeyborad
   m_DefaultActionMap: Gameplay

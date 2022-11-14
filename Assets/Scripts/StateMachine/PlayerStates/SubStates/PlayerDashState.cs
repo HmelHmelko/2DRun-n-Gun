@@ -7,7 +7,7 @@ public class PlayerDashState : PlayerAbilityState
     private float dashCooldown;
     public PlayerDashState(Player player, PlayerStateMachine playerStateMachine, PlayerData playerData, string animBoolName) : base(player, playerStateMachine, playerData, animBoolName)
     {
-        dashTime = playerData.dashTime; 
+        dashTime = playerData.dashTime;
     }
     public override void Enter()
     {

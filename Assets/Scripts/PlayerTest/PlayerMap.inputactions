@@ -15,6 +15,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Glide",
+                    "type": "Button",
+                    "id": "383ee47f-d800-4545-9ed4-04535b689a04",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Dash",
                     "type": "Button",
                     "id": "846119e9-0ca2-4c3b-bb6f-f29c03829885",
@@ -60,8 +69,8 @@
                 },
                 {
                     "name": "",
-                    "id": "24919a94-2b98-464a-8283-22045cb6382a",
-                    "path": "<Keyboard>/upArrow",
+                    "id": "a3d0e844-4153-4aed-aef0-efa463d78f68",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "MouseKeyborad",
@@ -71,12 +80,23 @@
                 },
                 {
                     "name": "",
-                    "id": "a3d0e844-4153-4aed-aef0-efa463d78f68",
-                    "path": "<Keyboard>/e",
+                    "id": "b183c274-ade9-49f9-995d-05c752b0be94",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "MouseKeyborad",
-                    "action": "Dash",
+                    "action": "Glide",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ac2141b-9a5e-4044-b583-991c29fa61ee",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MouseKeyborad",
+                    "action": "Glide",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -12,7 +12,6 @@ public class PlayerInputHandler : MonoBehaviour
     public bool jumpInputStop { get; private set; }
     public bool glidingInput { get; private set; }
     public bool dashInput { get; private set; }
-    public bool dashInputStop { get; private set; }
     #endregion
 
     #region localVariables
@@ -41,23 +40,32 @@ public class PlayerInputHandler : MonoBehaviour
             jumpInputStartTime = Time.time;
             jumpInputStop = false;
         }
-        if(context.canceled)
+        if (context.canceled)
         {
-            jumpInput = false;
             jumpInputStop = true;
         }
     }
     public void OnDashInput(InputAction.CallbackContext context)
     {
-        if(context.started)
+        if (context.started)
         {
             dashInput = true;
-            dashInputStop = false;
         }
-        else if(context.canceled)
+        else if (context.canceled)
         {
             dashInput = false;
-            dashInputStop = true;
+        }
+    }
+
+    public void OnGlideInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            glidingInput = true;
+        }
+        else if (context.canceled)
+        {
+            glidingInput = false;
         }
     }
     
@@ -68,6 +76,8 @@ public class PlayerInputHandler : MonoBehaviour
             jumpInput = false;
         }
     }
+
+    public void UseGlideInput() => glidingInput = false;
     public void UseJumpInput() => jumpInput = false;
     public void UseDashInput() => dashInput = false;
 }
