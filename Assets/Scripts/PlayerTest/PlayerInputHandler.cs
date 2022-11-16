@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -10,6 +11,8 @@ public class PlayerInputHandler : MonoBehaviour
     public bool jumpInputStop { get; private set; }
     public bool glidingInput { get; private set; }
     public bool dashInput { get; private set; }
+
+    public bool[] ShootInputs { get; private set; }
     #endregion
 
     #region localVariables
@@ -24,6 +27,11 @@ public class PlayerInputHandler : MonoBehaviour
     #endregion
 
     #region UnityEngine Shit
+    private void Start()
+    { 
+        int count = Enum.GetValues(typeof(ShootInputsEnum)).Length;
+        ShootInputs = new bool[count];
+    }
     private void Update()
     {
         CheckJumpInputHoldTime();
@@ -36,6 +44,32 @@ public class PlayerInputHandler : MonoBehaviour
     }
     #endregion
 
+    public void OnPrimaryShootInput(InputAction.CallbackContext context)
+    {
+        if(context.started)
+        {
+            ShootInputs[(int)ShootInputsEnum.Primary] = true;
+        }
+
+        if(context.canceled)
+        {
+            ShootInputs[(int)ShootInputsEnum.Primary] = false;
+        }
+
+    }
+    public void OnSecondaryShootInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            ShootInputs[(int)ShootInputsEnum.Secondary] = true;
+        }
+
+        if (context.canceled)
+        {
+            ShootInputs[(int)ShootInputsEnum.Secondary] = false;
+        }
+
+    }
     public void OnJumpInput(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -99,4 +133,10 @@ public class PlayerInputHandler : MonoBehaviour
     public void UseGlideInput() => glidingInput = false;
     public void UseJumpInput() => jumpInput = false;
     public void UseDashInput() => dashInput = false;
+}
+
+public enum ShootInputsEnum
+{
+    Primary,
+    Secondary
 }

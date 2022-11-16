@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class PlayerRunState : PlayerState
 {   
     //Inputs
@@ -34,7 +36,15 @@ public class PlayerRunState : PlayerState
         dashInput = _player.playerInputHandler.dashInput;
         jumpInput = _player.playerInputHandler.jumpInput;
 
-        if (jumpInput && _player.jumpState.CanJump())
+        if (_player.playerInputHandler.ShootInputs[(int)ShootInputsEnum.Primary])
+        {
+            Debug.Log("Shoot");
+        }
+        else if (_player.playerInputHandler.ShootInputs[(int)ShootInputsEnum.Secondary])
+        {
+            Debug.Log("alternativeShoot");
+        }
+        else if (jumpInput && _player.jumpState.CanJump())
         {
             _player.playerInputHandler.UseJumpInput();
             _playerStateMachine.ChangeState(_player.jumpState);
