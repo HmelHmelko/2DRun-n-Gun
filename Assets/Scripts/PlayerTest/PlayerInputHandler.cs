@@ -13,7 +13,10 @@ public class PlayerInputHandler : MonoBehaviour
     #endregion
 
     #region localVariables
+    [Header("Jump Buffer")]
     [SerializeField] private float inputHoldTime = 0.2f;
+
+    [Header("Glide Delay")]
     [SerializeField] private float inputHoldTimerBeforeStartGlide = 0.2f;
     private float jumpInputStartTime;
     private bool glideInputStart;
