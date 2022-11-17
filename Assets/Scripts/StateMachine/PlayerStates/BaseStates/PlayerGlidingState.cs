@@ -40,6 +40,7 @@ public class PlayerGlidingState : PlayerState
         dashInput = _player.playerInputHandler.dashInput;
         glidingInput = _player.playerInputHandler.glidingInput;
 
+
         if (isGrounded && _player.currentVelocity.y < 0.01f)
         {
             _playerStateMachine.ChangeState(_player.runState);

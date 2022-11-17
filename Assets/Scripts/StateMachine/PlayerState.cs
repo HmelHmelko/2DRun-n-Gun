@@ -20,7 +20,6 @@ public class PlayerState
         this._playerData = playerData;
         this.animBoolName = animBoolName;
     }   
-
     public virtual void Enter()
     {
         DoCheck();

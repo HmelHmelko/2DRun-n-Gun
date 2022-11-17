@@ -21,4 +21,5 @@ public class PlayerData : ScriptableObject
     [Header("Air State")]
     public float coyoteTime = 0.2f;
     public float jumpVelocityMultiplier = 0.5f;
+
 }
