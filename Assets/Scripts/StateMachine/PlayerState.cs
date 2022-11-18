@@ -29,7 +29,7 @@ public class PlayerState
         isAnimationFinished = false;
         isExitingState = false;
 
-        Debug.Log(animBoolName);
+        //Debug.Log(animBoolName);
     }
 
     public virtual void DoCheck()

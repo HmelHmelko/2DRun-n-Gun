@@ -17,4 +17,11 @@ public class PlayerStateMachine
         currentState = newState;
         newState.Enter();
     }
+
+    public void SemiChangeState(PlayerState state, PlayerState newState)
+    {
+        currentState.LogicUpdate();
+        state = currentState;
+        newState.Enter();
+    }
 }

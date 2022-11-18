@@ -36,7 +36,6 @@ public class PlayerRunState : PlayerState
         dashInput = _player.playerInputHandler.dashInput;
         jumpInput = _player.playerInputHandler.jumpInput;
 
-
         if (jumpInput && _player.jumpState.CanJump())
         {
             _player.playerInputHandler.UseJumpInput();

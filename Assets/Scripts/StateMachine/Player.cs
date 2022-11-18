@@ -1,8 +1,5 @@
 using Interfaces;
-using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Player : MonoBehaviour
 {
@@ -10,8 +7,6 @@ public class Player : MonoBehaviour
     [SerializeField] private PlayerData playerData;
     [SerializeField] private GameObject groundCheckObject;
     [SerializeField] private LayerMask groundedLayerMask;
-    [SerializeField] private WeaponData weaponData;
-    [SerializeField] private Transform shootPosition;
     #endregion
 
     #region State machine variables
@@ -29,7 +24,6 @@ public class Player : MonoBehaviour
     public Animator animator { get; private set; }
     public PlayerInputHandler playerInputHandler { get; private set; }
     public Rigidbody2D rb2D { get; private set; }
-    public Transform currentShootPosition { get; private set; }
 
     CapsuleCollider2D coll2D;
     ContactFilter2D contactFilter;
@@ -45,6 +39,7 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Methods variables
+
     public Vector2 currentVelocity { get; private set; }
     public int facingDirection { get; private set; }
 
@@ -70,23 +65,18 @@ public class Player : MonoBehaviour
         rb2D = GetComponent<Rigidbody2D>();
         _groundCheck = groundCheckObject.GetComponent<ICheck>();
 
-        currentShootPosition = shootPosition;
-
         contactFilter.layerMask = groundedLayerMask;
         contactFilter.useLayerMask = true;
         contactFilter.useTriggers = false;
     }
-
     private void Start()
     {
-        weaponData.shotsTimer = 0.0f;
         facingDirection = 1;
         stateMachine.Initialize(runState); 
     }
 
     private void Update()
     {
-        Shoot();
         currentVelocity = rb2D.velocity;
         stateMachine.currentState.LogicUpdate();
     }
@@ -133,28 +123,7 @@ public class Player : MonoBehaviour
     #endregion
 
     #region Other Functions
-
-    public void Shoot()
-    {
-        if (playerInputHandler.ShootInputs[(int)ShootInputsEnum.Primary])
-        {
-            if (Time.time >= weaponData.shotsTimer)
-            {
-                weaponData.shotsTimer = Time.time + 1f /weaponData.shotsPerSecond;
-                SpawnBullet();
-            }
-        }
-    }
-
-    private void SpawnBullet()
-    {
-        GameObject newBullet = Instantiate(weaponData.bulletPrefab, currentShootPosition.position, Quaternion.identity);
-        newBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(weaponData.bulletSpeed, 0.0f);
-    }
-
-
-
-        #endregion
+    #endregion
     private void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();
     private void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 }
