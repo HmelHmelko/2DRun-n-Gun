@@ -10,6 +10,6 @@ public class WeaponData : ScriptableObject
 
     [Header("Bullets Settings")]
     public float autoDestructTime = 5.0f;
-    public float damage = 1.0f;
+    public float weaponDamage = 1.0f;
 
 }

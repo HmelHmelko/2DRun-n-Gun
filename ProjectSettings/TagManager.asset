@@ -15,12 +15,12 @@ TagManager:
   - 
   - Character
   - Platforms
-  - Wall
   - 
   - 
   - 
   - 
-  - 
+  - Damager
+  - Damageable
   - 
   - 
   - 
