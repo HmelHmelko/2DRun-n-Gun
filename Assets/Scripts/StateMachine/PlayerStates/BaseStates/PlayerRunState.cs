@@ -46,6 +46,10 @@ public class PlayerRunState : PlayerState
             _player.playerInputHandler.UseDashInput();
             _playerStateMachine.ChangeState(_player.dashState);
         }
+        /*else if (_player.isHitted)
+        {
+            _playerStateMachine.ChangeState(_player.playerGetHitState);
+        }*/
         else if(!isGrounded)
         {
             _player.airState.StartCoyoteTime();

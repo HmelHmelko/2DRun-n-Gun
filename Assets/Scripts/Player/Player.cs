@@ -1,12 +1,14 @@
 using Interfaces;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     #region References
     [SerializeField] private PlayerData playerData;
     [SerializeField] private GameObject groundCheckObject;
     [SerializeField] private LayerMask groundedLayerMask;
+    [SerializeField] private LayerMask damageLayers;
     #endregion
 
     #region State machine variables
@@ -17,6 +19,7 @@ public class Player : MonoBehaviour
     public PlayerJumpState jumpState { get; private set; }
     public PlayerGlidingState glidingState { get; private set; }
     public PlayerDashState dashState { get; private set; }
+    //public PlayerGetHitState playerGetHitState { get; private set; }
     #endregion
 
     #region Components
@@ -24,6 +27,8 @@ public class Player : MonoBehaviour
     public Animator animator { get; private set; }
     public PlayerInputHandler playerInputHandler { get; private set; }
     public Rigidbody2D rb2D { get; private set; }
+
+    public SpriteRenderer spriteRenderer { get; private set; }
 
     CapsuleCollider2D coll2D;
     ContactFilter2D contactFilter;
@@ -42,10 +47,13 @@ public class Player : MonoBehaviour
 
     public Vector2 currentVelocity { get; private set; }
     public int facingDirection { get; private set; }
-
+    public float Health { get { return currentHealth; } }
+    public bool isInvincible { get; private set; }
+    
+    public float timeInvincible = 2.0f;
+    private float invincibleTimer;
     private Vector2 moveVector;
-    //private Vector2 previousPosition;
-    //private Vector2 currentPosition;
+    private float currentHealth;
 
     #endregion
 
@@ -58,11 +66,13 @@ public class Player : MonoBehaviour
         airState = new PlayerAirState(this, stateMachine, playerData, "inAir");
         glidingState = new PlayerGlidingState(this, stateMachine, playerData, "Glide");
         dashState = new PlayerDashState(this, stateMachine, playerData, "Dash");
+        //playerGetHitState = new PlayerGetHitState(this, stateMachine, playerData, "GetHit");
 
         coll2D = GetComponent<CapsuleCollider2D>();
         animator = GetComponent<Animator>();
         playerInputHandler = GetComponent<PlayerInputHandler>();
         rb2D = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         _groundCheck = groundCheckObject.GetComponent<ICheck>();
 
         contactFilter.layerMask = groundedLayerMask;
@@ -72,6 +82,8 @@ public class Player : MonoBehaviour
     private void Start()
     {
         facingDirection = 1;
+        isInvincible = false;
+        currentHealth = playerData.characterMaxHealth;
         stateMachine.Initialize(runState); 
     }
 
@@ -79,6 +91,7 @@ public class Player : MonoBehaviour
     {
         currentVelocity = rb2D.velocity;
         stateMachine.currentState.LogicUpdate();
+        Invincible();
     }
 
     private void FixedUpdate()
@@ -124,6 +137,48 @@ public class Player : MonoBehaviour
 
     #region Other Functions
     #endregion
+
+    public void Damage(float amount)
+    {
+        ChangeHealth(amount);
+    }
+
+    private void ChangeHealth(float amount)
+    {
+        if (amount > 0)
+        {
+            if (isInvincible)
+                return;
+            isInvincible = true;
+            invincibleTimer = timeInvincible;
+            currentHealth = Mathf.Clamp(currentHealth - amount, 0, playerData.characterMaxHealth);
+            Debug.Log(currentHealth + "Ouch");
+        }
+    }
+
+    private void Invincible()
+    {
+        if (coll2D.IsTouchingLayers(damageLayers) && isInvincible)
+        {
+            spriteRenderer.color = Color.red;
+        }
+        else
+        {
+            invincibleTimer -= Time.deltaTime;
+            if (invincibleTimer < 0)
+            {
+                spriteRenderer.color = Color.white;
+                isInvincible = false;
+            }
+
+        }
+    }
+
+    private void Death()
+    {
+
+    }
     private void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();
     private void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
+
 }

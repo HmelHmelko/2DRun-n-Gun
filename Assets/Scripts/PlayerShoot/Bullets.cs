@@ -3,7 +3,8 @@ using UnityEngine;
 public class Bullets : MonoBehaviour
 {
     [SerializeField] private WeaponData weaponData;
-    [SerializeField] private PlayerShoot playerShoot;
+    
+    private Damager damager;
     private Rigidbody2D bulletRB2d;
     private Animator bulletAnimator;
     private CapsuleCollider2D capsuleCollider;
@@ -15,6 +16,7 @@ public class Bullets : MonoBehaviour
         bulletRB2d = GetComponent<Rigidbody2D>();
         bulletAnimator = GetComponent<Animator>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
+        damager = GetComponent<Damager>();
     }
 
     private void Start()
@@ -28,14 +30,14 @@ public class Bullets : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {       
         Debug.Log(collision.gameObject);
-        playerShoot.AddToDetected(collision);
-        playerShoot.CheckShootDamage();
+        damager.AddToDetected(collision);
+        damager.CheckShootDamage(weaponData.weaponDamage);
         BulletHitTrigger();
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        playerShoot.RemoveFromDetected(collision);
+        damager.RemoveFromDetected(collision);
     }
     private void AutoDestruct()
     {

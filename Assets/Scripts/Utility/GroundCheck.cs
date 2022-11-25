@@ -13,6 +13,7 @@ namespace Utility
         {
             return Physics2D.OverlapCapsule(transform.position, new Vector2(width, height),CapsuleDirection2D.Horizontal, 0, groundLayer);
         }
+
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;

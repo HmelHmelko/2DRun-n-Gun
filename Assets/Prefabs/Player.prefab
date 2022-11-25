@@ -171,6 +171,10 @@ MonoBehaviour:
   groundedLayerMask:
     serializedVersion: 2
     m_Bits: 512
+  damageLayers:
+    serializedVersion: 2
+    m_Bits: 16384
+  timeInvincible: 0.5
 --- !u!114 &2004242432338993887
 MonoBehaviour:
   m_ObjectHideFlags: 0
