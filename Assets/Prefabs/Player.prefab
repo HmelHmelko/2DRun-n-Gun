@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 1711948200284539989}
   - component: {fileID: 8307588720202015690}
   - component: {fileID: 6786498106626283356}
+  - component: {fileID: 6248251223252808643}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -38,7 +39,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2004242433977132868}
   - {fileID: 2004242433020094966}
   - {fileID: 5552349345767171896}
   - {fileID: 8897008213961767637}
@@ -131,8 +131,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.25, y: 0.995}
-  m_Size: {x: 0.5, y: 1.8}
+  m_Offset: {x: 0, y: 1}
+  m_Size: {x: 0.5, y: 2}
   m_Direction: 0
 --- !u!95 &2004242432338993885
 Animator:
@@ -167,14 +167,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: e339a5ce1c172784d80a3dfa2a0c3523, type: 2}
-  groundCheckObject: {fileID: 2004242433977132867}
+  groundCheckObject: {fileID: 0}
   groundedLayerMask:
     serializedVersion: 2
     m_Bits: 512
   damageLayers:
     serializedVersion: 2
     m_Bits: 16384
-  timeInvincible: 0.5
+  groundedRaycastDistance: 0.5
 --- !u!114 &2004242432338993887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,6 +427,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   randomizePitch: 0
   pitchRange: 0.2
+--- !u!114 &6248251223252808643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004242432338993880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35ad96da254dab142afbcaf75bd46f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2004242433020094965
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,7 +470,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2004242432338993881}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2004242433020094967
 SpriteRenderer:
@@ -531,55 +543,6 @@ MonoBehaviour:
   levelLayermask:
     serializedVersion: 2
     m_Bits: 512
---- !u!1 &2004242433977132867
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2004242433977132868}
-  - component: {fileID: 2004242433977132869}
-  m_Layer: 8
-  m_Name: groundCheck
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2004242433977132868
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2004242433977132867}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.25, y: 0.15, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2004242432338993881}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2004242433977132869
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2004242433977132867}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2118de5350da9494ea394cb8de17591e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  width: 1
-  height: 0.25
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 512
 --- !u!1 &8333311290900233538
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,12 +568,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8333311290900233538}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.25, y: 1, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2004242432338993881}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!81 &5901768682594392586
 AudioListener:
@@ -650,7 +613,7 @@ Transform:
   m_Children:
   - {fileID: 6574235315930898868}
   m_Father: {fileID: 2004242432338993881}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4856544778169057858
 PrefabInstance:

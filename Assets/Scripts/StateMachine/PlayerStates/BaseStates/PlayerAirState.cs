@@ -23,7 +23,7 @@ public class PlayerAirState : PlayerState
     public override void DoCheck()
     {
         base.DoCheck();
-        isGrounded = _player.isGrounded();
+        isGrounded = _player.IsGrounded;
     }
 
     public override void Enter()
@@ -50,7 +50,7 @@ public class PlayerAirState : PlayerState
         CheckJumpMultiplier();
 
 
-        if (isGrounded && _player.currentVelocity.y < 0.01f)
+        if (isGrounded && _player.currentVelocity.y < 0f)
         {
             _playerStateMachine.ChangeState(_player.runState);
         }

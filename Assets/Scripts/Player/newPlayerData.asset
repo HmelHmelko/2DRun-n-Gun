@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c302d2d506de6943a5e9e065dbe00db, type: 3}
   m_Name: newPlayerData
   m_EditorClassIdentifier: 
+  characterMaxHealth: 5
+  timeInvincible: 0.5
   movementVelocity: 0
   jumpVelocity: 12
   numberOfJumps: 1

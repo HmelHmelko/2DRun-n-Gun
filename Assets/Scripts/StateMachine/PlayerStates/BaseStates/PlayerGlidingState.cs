@@ -19,7 +19,7 @@ public class PlayerGlidingState : PlayerState
     public override void DoCheck()
     {
         base.DoCheck();
-        isGrounded = _player.isGrounded();
+        isGrounded = _player.IsGrounded;
         isGlide = _player.airState.isGliding;
     }
 
@@ -41,7 +41,7 @@ public class PlayerGlidingState : PlayerState
         glidingInput = _player.playerInputHandler.glidingInput;
 
 
-        if (isGrounded && _player.currentVelocity.y < 0.01f)
+        if (isGrounded && _player.currentVelocity.y < 0f)
         {
             _playerStateMachine.ChangeState(_player.runState);
         }

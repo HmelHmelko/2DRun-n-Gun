@@ -5,6 +5,8 @@ public class PlayerData : ScriptableObject
 {
     [Header("Player Stats")]
     public float characterMaxHealth = 5.0f;
+    public float timeInvincible = 0.5f;
+    public float flickeringDuration = 0.05f;
 
     [Header("Run State")]
     public float movementVelocity = 5.0f;
