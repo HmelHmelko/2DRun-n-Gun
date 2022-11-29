@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
-    [SerializeField] private float hp = 100.0f;
+    [SerializeField] private int hp = 100;
 
     private Animator enemyAnimator;
     private Collider2D enemyColl;
@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour, IDamageable
             EnemyDeath();
         }
     }
-    public void Damage(float amount)
+    public void Damage(int amount)
     {
         hp -= amount;
         enemyAnimator.SetTrigger("Hitted");

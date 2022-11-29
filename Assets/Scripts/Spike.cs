@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spike : MonoBehaviour
 {
-    [SerializeField] private float damage = 1.0f;
+    [SerializeField] private int damage = 1;
 
     private Player player;
     private Damager damager;
@@ -27,7 +25,7 @@ public class Spike : MonoBehaviour
         player = collision.GetComponent<Player>();
         if (player != null)
         {
-            damager.CheckShootDamage(damage);
+            damager.CheckDamage(damage);
         }
     }
 

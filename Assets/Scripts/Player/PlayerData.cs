@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     [Header("Player Stats")]
-    public float characterMaxHealth = 5.0f;
+    public int characterMaxHealth = 4;
     public float timeInvincible = 0.5f;
     public float flickeringDuration = 0.05f;
 

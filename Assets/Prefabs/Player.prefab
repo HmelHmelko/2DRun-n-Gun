@@ -167,13 +167,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: e339a5ce1c172784d80a3dfa2a0c3523, type: 2}
-  groundCheckObject: {fileID: 0}
   groundedLayerMask:
     serializedVersion: 2
     m_Bits: 512
   damageLayers:
     serializedVersion: 2
     m_Bits: 16384
+  uiHealth: {fileID: 3238279334858455643, guid: 0cc088fe32e0e524fa99f6eeb1ce788d, type: 3}
   groundedRaycastDistance: 0.5
 --- !u!114 &2004242432338993887
 MonoBehaviour:

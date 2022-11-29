@@ -20,6 +20,8 @@ public class PlayerShoot : MonoBehaviour
     #region Method Variables
     private float cooldownTimer = Mathf.Infinity;
     private float shootCooldown;
+    private float reloadTimer;
+    private int bulletsCount;
     #endregion
 
     #region Unity shit
@@ -33,6 +35,9 @@ public class PlayerShoot : MonoBehaviour
     {
         currentShootPosition = shootPosition;
         shootCooldown = 1f / weaponData.shotsPerSecond;
+
+        reloadTimer = weaponData.realodTime;
+        bulletsCount = weaponData.weaponClip;
     }
     private void Update()
     {
@@ -51,11 +56,29 @@ public class PlayerShoot : MonoBehaviour
     }
     private void SpawnBullet()
     {
-        cooldownTimer = 0;
-        GameObject newBullet = Instantiate(weaponData.bulletPrefab, currentShootPosition.position, Quaternion.identity);
-        newBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(weaponData.bulletSpeed, 0.0f);
-        bulletParticle.Play();
-        applySound.PlayRandomSound(shootClips);
+        if (bulletsCount > 0)
+        {
+            bulletsCount--;
+            cooldownTimer = 0;
+            GameObject newBullet = Instantiate(weaponData.bulletPrefab, currentShootPosition.position, Quaternion.identity);
+            newBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(weaponData.bulletSpeed, 0.0f);
+            bulletParticle.Play();
+            applySound.PlayRandomSound(shootClips);
+        }
+        else if(bulletsCount == 0)
+        {
+            Reload();
+        }
+    }
+
+    private void Reload()
+    {
+        reloadTimer -= Time.deltaTime;
+        if(reloadTimer <= 0)
+        {
+            reloadTimer = weaponData.realodTime;
+            bulletsCount = weaponData.weaponClip;
+        }
     }
     #endregion
 }

@@ -6,9 +6,9 @@ public class Player : MonoBehaviour, IDamageable
 {
     #region References
     [SerializeField] private PlayerData playerData;
-    [SerializeField] private GameObject groundCheckObject;
     [SerializeField] private LayerMask groundedLayerMask;
     [SerializeField] private LayerMask damageLayers;
+    [SerializeField] private UIHealth uiHealth;
     #endregion
 
     #region State machine variables
@@ -40,7 +40,7 @@ public class Player : MonoBehaviour, IDamageable
     public ContactFilter2D ContactFilter { get { return contactFilter; } }
     public Vector2 currentVelocity { get; private set; }
     public int facingDirection { get; private set; }
-    public float Health { get { return currentHealth; } }
+    public int Health { get { return currentHealth; } }
     public bool isInvincible { get; private set; }
 
     public float groundedRaycastDistance = 0.1f;
@@ -54,7 +54,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private float invincibleTimer;
     private Vector2 moveVector;
-    private float currentHealth;
+    private int currentHealth;
     #endregion
 
     #region UnityEngine shit
@@ -79,12 +79,13 @@ public class Player : MonoBehaviour, IDamageable
         contactFilter.useTriggers = false;
 
         Physics2D.queriesStartInColliders = false;
+
+        currentHealth = playerData.characterMaxHealth;
     }
     private void Start()
     {
         facingDirection = 1;
         isInvincible = false;
-        currentHealth = playerData.characterMaxHealth;
         stateMachine.Initialize(runState);
     }
 
@@ -93,6 +94,8 @@ public class Player : MonoBehaviour, IDamageable
         currentVelocity = rb2D.velocity;
         stateMachine.currentState.LogicUpdate();
         Invincible();
+        Death();
+        Debug.Log(Health);
     }
 
     private void FixedUpdate()
@@ -256,12 +259,12 @@ public class Player : MonoBehaviour, IDamageable
     #region Other Functions
     #endregion
 
-    public void Damage(float amount)
+    public void Damage(int amount)
     {
         ChangeHealth(amount);
     }
 
-    private void ChangeHealth(float amount)
+    private void ChangeHealth(int amount)
     {
         if (amount > 0)
         {
@@ -269,7 +272,8 @@ public class Player : MonoBehaviour, IDamageable
                 return;
             isInvincible = true;
             invincibleTimer = playerData.timeInvincible;
-            currentHealth = Mathf.Clamp(currentHealth - amount, 0, playerData.characterMaxHealth);
+            currentHealth = currentHealth - amount;
+            uiHealth.UpdateHealth();
             Debug.Log(currentHealth + "Ouch");
         }
     }
@@ -293,7 +297,11 @@ public class Player : MonoBehaviour, IDamageable
     }
     private void Death()
     {
-
+        if(Health <= 0)
+        {
+            Destroy(this.gameObject);
+            Debug.Log("u are dead");
+        }
     }
     private void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();
     private void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();

@@ -11,7 +11,7 @@ public class Damager : MonoBehaviour
 
         if (damageable != null)
         {
-            Debug.Log("add to dected" + damageable);
+            //Debug.Log("add to dected" + damageable);
             detectedDamageable.Add(damageable);
         }
     }
@@ -21,11 +21,11 @@ public class Damager : MonoBehaviour
 
         if (damageable != null)
         {
-            Debug.Log("remove to dected" + damageable);
+            //Debug.Log("remove to dected" + damageable);
             detectedDamageable.Remove(damageable);
         }
     }
-    public void CheckShootDamage(float damage)
+    public void CheckDamage(int damage)
     {
         foreach (IDamageable item in detectedDamageable)
         {
