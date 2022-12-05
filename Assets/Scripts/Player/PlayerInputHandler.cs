@@ -133,6 +133,7 @@ public class PlayerInputHandler : MonoBehaviour
     public void UseGlideInput() => glidingInput = false;
     public void UseJumpInput() => jumpInput = false;
     public void UseDashInput() => dashInput = false;
+
 }
 
 public enum ShootInputsEnum

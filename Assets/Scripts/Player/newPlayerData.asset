@@ -15,12 +15,13 @@ MonoBehaviour:
   characterMaxHealth: 4
   timeInvincible: 0.5
   flickeringDuration: 0.05
-  movementVelocity: 0
+  knockBackImpulse: 6
+  movementVelocity: 5
   jumpVelocity: 12
   numberOfJumps: 1
   dashTime: 0.4
   dashVelocityMultiplier: 4
-  dashCooldown: 5
+  dashCooldown: 3.5
   glideVelocity: 2
   coyoteTime: 0.2
   jumpVelocityMultiplier: 0.85

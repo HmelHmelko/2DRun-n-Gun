@@ -1,6 +1,7 @@
 using Interfaces;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour, IDamageable
 {
@@ -19,7 +20,6 @@ public class Player : MonoBehaviour, IDamageable
     public PlayerJumpState jumpState { get; private set; }
     public PlayerGlidingState glidingState { get; private set; }
     public PlayerDashState dashState { get; private set; }
-    //public PlayerGetHitState playerGetHitState { get; private set; }
     #endregion
 
     #region Components
@@ -41,6 +41,8 @@ public class Player : MonoBehaviour, IDamageable
     public Vector2 currentVelocity { get; private set; }
     public int facingDirection { get; private set; }
     public int Health { get { return currentHealth; } }
+    public float dashCDValue { get; private set; }
+    public bool dashReady { get; private set; }
     public bool isInvincible { get; private set; }
 
     public float groundedRaycastDistance = 0.1f;
@@ -55,6 +57,11 @@ public class Player : MonoBehaviour, IDamageable
     private float invincibleTimer;
     private Vector2 moveVector;
     private int currentHealth;
+
+    protected readonly int hitted = Animator.StringToHash("Hitted");
+
+    public float currentCDDash;
+    private float dashCooldawn;
     #endregion
 
     #region UnityEngine shit
@@ -66,7 +73,6 @@ public class Player : MonoBehaviour, IDamageable
         airState = new PlayerAirState(this, stateMachine, playerData, "inAir");
         glidingState = new PlayerGlidingState(this, stateMachine, playerData, "Glide");
         dashState = new PlayerDashState(this, stateMachine, playerData, "Dash");
-        //playerGetHitState = new PlayerGetHitState(this, stateMachine, playerData, "GetHit");
 
         coll2D = GetComponent<CapsuleCollider2D>();
         animator = GetComponent<Animator>();
@@ -86,16 +92,19 @@ public class Player : MonoBehaviour, IDamageable
     {
         facingDirection = 1;
         isInvincible = false;
+        dashCooldawn = playerData.dashCooldown;
+        currentCDDash = dashCooldawn;
         stateMachine.Initialize(runState);
     }
 
     private void Update()
     {
+        dashCDValue = currentCDDash / dashCooldawn;
         currentVelocity = rb2D.velocity;
         stateMachine.currentState.LogicUpdate();
+        CheckDashCooldown();
         Invincible();
-        Death();
-        Debug.Log(Health);
+        Death();     
     }
 
     private void FixedUpdate()
@@ -257,7 +266,19 @@ public class Player : MonoBehaviour, IDamageable
     #endregion
 
     #region Other Functions
-    #endregion
+    public void CheckDashCooldown()
+    {
+        if(currentCDDash >= dashCooldawn)
+        {
+            dashReady = true;
+        }
+        else
+        {
+            dashReady = false;
+            currentCDDash += Time.deltaTime;
+            currentCDDash = Mathf.Clamp(currentCDDash, 0.0f, dashCooldawn);
+        }
+    }
 
     public void Damage(int amount)
     {
@@ -273,8 +294,9 @@ public class Player : MonoBehaviour, IDamageable
             isInvincible = true;
             invincibleTimer = playerData.timeInvincible;
             currentHealth = currentHealth - amount;
+            rb2D.AddForce(new Vector2(currentVelocity.x, playerData.knockBackImpulse), ForceMode2D.Impulse);
+            animator.SetTrigger(hitted);
             uiHealth.UpdateHealth();
-            Debug.Log(currentHealth + "Ouch");
         }
     }
 
@@ -303,6 +325,7 @@ public class Player : MonoBehaviour, IDamageable
             Debug.Log("u are dead");
         }
     }
+    #endregion
     private void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();
     private void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 

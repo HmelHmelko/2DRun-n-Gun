@@ -4,7 +4,8 @@ public class PlayerDashState : PlayerAbilityState
 {
     private float dashTime;
     private float dashZeroYVelocity = 0f;
-    private float dashCooldown;
+    public float dashCooldown;
+
     public PlayerDashState(Player player, PlayerStateMachine playerStateMachine, PlayerData playerData, string animBoolName) : base(player, playerStateMachine, playerData, animBoolName)
     {
         dashTime = playerData.dashTime;
@@ -14,6 +15,7 @@ public class PlayerDashState : PlayerAbilityState
         base.Enter();
         _player.rb2D.gravityScale = 0;
         _player.SetVelocity(_player.currentVelocity.x * _playerData.dashVelocityMultiplier, dashZeroYVelocity);
+        _player.currentCDDash = 0.0f;
         dashCooldown = _playerData.dashCooldown;
     }
 
@@ -26,9 +28,7 @@ public class PlayerDashState : PlayerAbilityState
     {
         base.LogicUpdate();
 
-        dashTime -= Time.deltaTime;
-        dashCooldown -= Time.deltaTime;
-        
+        dashTime -= Time.deltaTime;      
         if (dashTime <= 0.0f)
         {
             isAbilityDone = true;
@@ -38,7 +38,7 @@ public class PlayerDashState : PlayerAbilityState
     }
     public bool CanDash()
     {
-        if(Time.time >= startTime + dashCooldown)
+        if(_player.dashReady)
         {
             return true;
         }

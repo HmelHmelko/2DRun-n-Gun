@@ -1,4 +1,5 @@
-using System.Collections.Generic;
+using System.Collections;
+using System.Net;
 using UnityEngine;
 
 
@@ -15,13 +16,20 @@ public class PlayerShoot : MonoBehaviour
     #region Components/Dynamic Fields/Interface
     public AudioClip[] shootClips;
     public Transform currentShootPosition { get; private set; }
+    public float ammoBar { get { return ammoProgressBar; } }
+    public float maxAmmo { get { return maxAmmoClip; } }
+    public float reloadingTimer { get { return reloadTimer; } }
+    public bool isReloading { get { return reloadTime; } }
     #endregion
 
     #region Method Variables
     private float cooldownTimer = Mathf.Infinity;
     private float shootCooldown;
-    private float reloadTimer;
-    private int bulletsCount;
+    public float reloadTimer;
+    private float bulletsCount;
+    private float maxAmmoClip;
+    private float ammoProgressBar;
+    private bool reloadTime;
     #endregion
 
     #region Unity shit
@@ -29,20 +37,31 @@ public class PlayerShoot : MonoBehaviour
     {
         player = GetComponent<Player>();
         applySound = GetComponent<ApplySound>();
+
+        bulletsCount = 0.0f;
+        maxAmmoClip = weaponData.weaponClip;
+        reloadTimer = weaponData.realoadTime;
     }
 
     private void Start()
     {
         currentShootPosition = shootPosition;
         shootCooldown = 1f / weaponData.shotsPerSecond;
-
-        reloadTimer = weaponData.realodTime;
-        bulletsCount = weaponData.weaponClip;
     }
     private void Update()
     {
         cooldownTimer += Time.deltaTime;
+        SetUIAmmoBar(bulletsCount, maxAmmoClip);
         Shoot();
+
+        if (bulletsCount >= maxAmmoClip)
+        {
+            Reload();
+        }
+        else if (!reloadTime && bulletsCount >= 0.0f)
+        {
+            bulletsCount = bulletsCount - weaponData.activeReloadValue * Time.deltaTime;
+        }
     }
     #endregion
 
@@ -56,29 +75,32 @@ public class PlayerShoot : MonoBehaviour
     }
     private void SpawnBullet()
     {
-        if (bulletsCount > 0)
+        if (bulletsCount < maxAmmoClip && !reloadTime)
         {
-            bulletsCount--;
-            cooldownTimer = 0;
+            bulletsCount += 1;
+            cooldownTimer = 0; 
             GameObject newBullet = Instantiate(weaponData.bulletPrefab, currentShootPosition.position, Quaternion.identity);
             newBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(weaponData.bulletSpeed, 0.0f);
             bulletParticle.Play();
             applySound.PlayRandomSound(shootClips);
         }
-        else if(bulletsCount == 0)
+    }
+    private void Reload()
+    {
+        reloadTime = true;
+        reloadTimer -= Time.deltaTime;
+
+        if (reloadTimer <= 0)
         {
-            Reload();
+            reloadTimer = weaponData.realoadTime;
+            bulletsCount = 0.0f;
+            reloadTime = false;
         }
     }
 
-    private void Reload()
+    private void SetUIAmmoBar(float bullCount, float maxCount)
     {
-        reloadTimer -= Time.deltaTime;
-        if(reloadTimer <= 0)
-        {
-            reloadTimer = weaponData.realodTime;
-            bulletsCount = weaponData.weaponClip;
-        }
+        ammoProgressBar = bullCount / maxCount * 100;
     }
     #endregion
 }
