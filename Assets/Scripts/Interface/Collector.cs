@@ -22,7 +22,6 @@ public class Collector : MonoBehaviour
     private void Update()
     {
         gemsConterUI.text = gems.ToString();
-        Debug.Log(gemAmountSumm);
     }
     public void AddToCollected(Collider2D collision)
     {

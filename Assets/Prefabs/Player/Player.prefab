@@ -174,8 +174,7 @@ MonoBehaviour:
   damageLayers:
     serializedVersion: 2
     m_Bits: 16384
-  uiHealth: {fileID: 3238279334858455643, guid: 0cc088fe32e0e524fa99f6eeb1ce788d, type: 3}
-  dashSlider: {fileID: 0}
+  uiHealth: {fileID: 8123943624889430142, guid: e57f30bbab22ecb469f61a0be8ca916b, type: 3}
   groundedRaycastDistance: 0.5
   currentCDDash: 0
 --- !u!114 &2004242432338993887
@@ -455,6 +454,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ad793ad8b3c39641a2f192d5fefc747, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gemAmount: 20
+  gemsConterUI: {fileID: 6664588363556314560, guid: d0f48226f2a0df34180d2957c1d8fafe, type: 3}
+  keysAmount: 50
 --- !u!1 &2004242433020094965
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,8 +7,11 @@ public class UIDash : MonoBehaviour
 {
     [SerializeField] private Player player;
     private Slider dashSlider;
-    public GameObject hui;
-    public GameObject her;
+    public GameObject backGround;
+    public GameObject fillArea;
+
+    private float blinkTimer = 2f;
+    private float blinkCounterTimer = 0.0f;
 
     private void Awake()
     {
@@ -19,13 +23,15 @@ public class UIDash : MonoBehaviour
 
         if (dashSlider.value >= 1.0f)
         {
-            hui.gameObject.SetActive(false);
-            her.gameObject.SetActive(false);
+            blinkCounterTimer += Time.deltaTime;
+            backGround.gameObject.SetActive(false);
+            fillArea.gameObject.SetActive(false);
         }
         else
         {
-            hui.gameObject.SetActive(true);
-            her.gameObject.SetActive(true);
+            blinkCounterTimer = 0.0f;
+            backGround.gameObject.SetActive(true);
+            fillArea.gameObject.SetActive(true);
         }
     }
 
@@ -33,4 +39,5 @@ public class UIDash : MonoBehaviour
     {
         dashSlider.value = player.dashCDValue;  
     }
+
 }

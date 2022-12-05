@@ -1,3 +1,4 @@
+using Cinemachine.Utility;
 using Interfaces;
 using System.Collections;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private LayerMask groundedLayerMask;
     [SerializeField] private LayerMask damageLayers;
     [SerializeField] private UIHealth uiHealth;
+    private Damager damager;
     #endregion
 
     #region State machine variables
@@ -43,7 +45,7 @@ public class Player : MonoBehaviour, IDamageable
     public int Health { get { return currentHealth; } }
     public float dashCDValue { get; private set; }
     public bool dashReady { get; private set; }
-    public bool isInvincible { get; private set; }
+    public bool isInvincible { get; set; }
 
     public float groundedRaycastDistance = 0.1f;
 
@@ -79,6 +81,7 @@ public class Player : MonoBehaviour, IDamageable
         playerInputHandler = GetComponent<PlayerInputHandler>();
         rb2D = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        damager = GetComponent<Damager>();
 
         contactFilter.layerMask = groundedLayerMask;
         contactFilter.useLayerMask = true;
@@ -104,7 +107,9 @@ public class Player : MonoBehaviour, IDamageable
         stateMachine.currentState.LogicUpdate();
         CheckDashCooldown();
         Invincible();
-        Death();     
+        Death();
+
+        //Debug.Log(isInvincible);
     }
 
     private void FixedUpdate()
@@ -299,12 +304,15 @@ public class Player : MonoBehaviour, IDamageable
             uiHealth.UpdateHealth();
         }
     }
-
     private void Invincible()
     {
         if (coll2D.IsTouchingLayers(damageLayers) && isInvincible)
         {
             spriteRenderer.color = Color.red;
+        }
+        else if (stateMachine.currentState.Equals(dashState))
+        {
+            isInvincible = true;
         }
         else
         {
@@ -324,6 +332,21 @@ public class Player : MonoBehaviour, IDamageable
             Destroy(this.gameObject);
             Debug.Log("u are dead");
         }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (stateMachine.currentState.Equals(dashState))
+        {
+            Debug.Log(collision.gameObject);
+            damager.AddToDetected(collision);
+            damager.CheckDamage(playerData.dashDamage);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        damager.RemoveFromDetected(collision);
     }
     #endregion
     private void AnimationTrigger() => stateMachine.currentState.AnimationTrigger();

@@ -4,7 +4,6 @@ public class PlayerDashState : PlayerAbilityState
 {
     private float dashTime;
     private float dashZeroYVelocity = 0f;
-    public float dashCooldown;
 
     public PlayerDashState(Player player, PlayerStateMachine playerStateMachine, PlayerData playerData, string animBoolName) : base(player, playerStateMachine, playerData, animBoolName)
     {
@@ -16,7 +15,6 @@ public class PlayerDashState : PlayerAbilityState
         _player.rb2D.gravityScale = 0;
         _player.SetVelocity(_player.currentVelocity.x * _playerData.dashVelocityMultiplier, dashZeroYVelocity);
         _player.currentCDDash = 0.0f;
-        dashCooldown = _playerData.dashCooldown;
     }
 
     public override void Exit()
