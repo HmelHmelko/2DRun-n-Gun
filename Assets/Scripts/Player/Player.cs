@@ -284,12 +284,10 @@ public class Player : MonoBehaviour, IDamageable
             currentCDDash = Mathf.Clamp(currentCDDash, 0.0f, dashCooldawn);
         }
     }
-
     public void Damage(int amount)
     {
         ChangeHealth(amount);
     }
-
     private void ChangeHealth(int amount)
     {
         if (amount > 0)
@@ -334,12 +332,14 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        damager.AddToDetected(collision);
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (stateMachine.currentState.Equals(dashState))
         {
-            Debug.Log(collision.gameObject);
-            damager.AddToDetected(collision);
             damager.CheckDamage(playerData.dashDamage);
         }
     }
