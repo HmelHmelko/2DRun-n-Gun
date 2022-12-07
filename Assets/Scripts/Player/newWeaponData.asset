@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: newWeaponData
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 4373319067137964283, guid: 39704889b03b92046858caefb147fde5, type: 3}
-  shotsPerSecond: 4
-  bulletSpeed: 10
-  weaponClip: 15
+  shotsPerSecond: 3.2
+  bulletSpeed: 15
+  weaponClip: 12
   realoadTime: 1
   activeReloadValue: 1
-  autoDestructTime: 0.8
+  autoDestructTime: 1
   weaponDamage: 1

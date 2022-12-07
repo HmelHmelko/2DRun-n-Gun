@@ -1,6 +1,7 @@
 using Cinemachine.Utility;
 using Interfaces;
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,7 +57,7 @@ public class Player : MonoBehaviour, IDamageable
     Collider2D[] groundColliders = new Collider2D[3];
     Vector2[] raycastPositions = new Vector2[3];
 
-    private float invincibleTimer;
+    private float invinciblePostTimer;
     private Vector2 moveVector;
     private int currentHealth;
 
@@ -64,6 +65,10 @@ public class Player : MonoBehaviour, IDamageable
 
     public float currentCDDash;
     private float dashCooldawn;
+
+    private Color transparent = new Color(255,255,255,0);
+    private Color visible = new Color(255, 255, 255, 1);
+
     #endregion
 
     #region UnityEngine shit
@@ -108,8 +113,6 @@ public class Player : MonoBehaviour, IDamageable
         CheckDashCooldown();
         Invincible();
         Death();
-
-        //Debug.Log(isInvincible);
     }
 
     private void FixedUpdate()
@@ -268,12 +271,9 @@ public class Player : MonoBehaviour, IDamageable
             hitBuffer[i] = new RaycastHit2D();
         }
     }
-    #endregion
-
-    #region Other Functions
     public void CheckDashCooldown()
     {
-        if(currentCDDash >= dashCooldawn)
+        if (currentCDDash >= dashCooldawn)
         {
             dashReady = true;
         }
@@ -284,6 +284,9 @@ public class Player : MonoBehaviour, IDamageable
             currentCDDash = Mathf.Clamp(currentCDDash, 0.0f, dashCooldawn);
         }
     }
+    #endregion
+
+    #region Other Functions
     public void Damage(int amount)
     {
         ChangeHealth(amount);
@@ -295,7 +298,6 @@ public class Player : MonoBehaviour, IDamageable
             if (isInvincible)
                 return;
             isInvincible = true;
-            invincibleTimer = playerData.timeInvincible;
             currentHealth = currentHealth - amount;
             rb2D.AddForce(new Vector2(currentVelocity.x, playerData.knockBackImpulse), ForceMode2D.Impulse);
             animator.SetTrigger(hitted);
@@ -303,10 +305,22 @@ public class Player : MonoBehaviour, IDamageable
         }
     }
     private void Invincible()
-    {
-        if (coll2D.IsTouchingLayers(damageLayers) && isInvincible)
+    {      
+        if (isInvincible)
         {
-            spriteRenderer.color = Color.red;
+            if (coll2D.IsTouchingLayers(damageLayers) && !stateMachine.currentState.Equals(dashState))
+            {
+                invinciblePostTimer = playerData.timeInvincible;
+                isInvincible = true;
+            }
+            else if (!coll2D.IsTouchingLayers(damageLayers))
+            {
+                invinciblePostTimer -= Time.deltaTime;
+                if (invinciblePostTimer <= 0)
+                {
+                    isInvincible = false;
+                }
+            }
         }
         else if (stateMachine.currentState.Equals(dashState))
         {
@@ -314,14 +328,9 @@ public class Player : MonoBehaviour, IDamageable
         }
         else
         {
-            invincibleTimer -= Time.deltaTime;
-            if (invincibleTimer < 0)
-            {
-                spriteRenderer.color = Color.white;
-                isInvincible = false;
-            }
-
+            isInvincible = false;
         }
+
     }
     private void Death()
     {
@@ -331,9 +340,23 @@ public class Player : MonoBehaviour, IDamageable
             Debug.Log("u are dead");
         }
     }
+    public IEnumerator SpriteFlick()
+    {
+        while (isInvincible)
+        {
+            spriteRenderer.color = transparent;
+            yield return new WaitForSeconds(playerData.flickTime);
+            spriteRenderer.color = visible;
+            yield return new WaitForSeconds(playerData.flickTime);
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (!stateMachine.currentState.Equals(dashState))
+        {
+            StartCoroutine(SpriteFlick());
+        }
         damager.AddToDetected(collision);
     }
     private void OnTriggerStay2D(Collider2D collision)

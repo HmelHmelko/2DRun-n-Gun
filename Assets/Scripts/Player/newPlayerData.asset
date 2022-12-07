@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: newPlayerData
   m_EditorClassIdentifier: 
   characterMaxHealth: 4
-  timeInvincible: 0.5
-  flickeringDuration: 0.05
-  knockBackImpulse: 6
-  movementVelocity: 0
-  jumpVelocity: 12
+  timeInvincible: 1
+  knockBackImpulse: 5
+  flickTime: 0.35
+  movementVelocity: 5
+  jumpVelocity: 10
   numberOfJumps: 1
   dashTime: 0.4
   dashVelocityMultiplier: 4

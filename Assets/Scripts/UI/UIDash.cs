@@ -10,8 +10,6 @@ public class UIDash : MonoBehaviour
     public GameObject backGround;
     public GameObject fillArea;
 
-    private float blinkTimer = 2f;
-    private float blinkCounterTimer = 0.0f;
 
     private void Awake()
     {
@@ -23,13 +21,11 @@ public class UIDash : MonoBehaviour
 
         if (dashSlider.value >= 1.0f)
         {
-            blinkCounterTimer += Time.deltaTime;
             backGround.gameObject.SetActive(false);
             fillArea.gameObject.SetActive(false);
         }
         else
         {
-            blinkCounterTimer = 0.0f;
             backGround.gameObject.SetActive(true);
             fillArea.gameObject.SetActive(true);
         }
