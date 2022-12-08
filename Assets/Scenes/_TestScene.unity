@@ -3763,7 +3763,7 @@ PrefabInstance:
     - target: {fileID: 1711948200284539989, guid: 7430a4ec9a60f294d80493097ae683f3, type: 3}
       propertyPath: cameraShake
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2023020599867339568}
     - target: {fileID: 1711948200284539989, guid: 7430a4ec9a60f294d80493097ae683f3, type: 3}
       propertyPath: simpleShoot
       value: 
@@ -3863,7 +3863,7 @@ PrefabInstance:
     - target: {fileID: 2004242432338993886, guid: 7430a4ec9a60f294d80493097ae683f3, type: 3}
       propertyPath: cameraShake
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2023020599867339568}
     - target: {fileID: 2004242432338993886, guid: 7430a4ec9a60f294d80493097ae683f3, type: 3}
       propertyPath: shootPosition
       value: 
