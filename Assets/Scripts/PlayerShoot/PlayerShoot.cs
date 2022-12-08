@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Net;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private Transform shootPosition;
     [SerializeField] private ParticleSystem bulletParticle;
     [SerializeField] private ApplySound applySound;
+    [SerializeField] private CameraShake cameraShake;
     #endregion
 
     #region Components/Dynamic Fields/Interface

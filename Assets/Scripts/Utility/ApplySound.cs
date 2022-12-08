@@ -20,9 +20,9 @@ public class ApplySound : MonoBehaviour
         audiosource.PlayOneShot(clips[choice]);
     }
 
-    public void PlaySoundOneTime()
+    public void PlaySoundOneTime(AudioClip clip)
     {
-
+        audiosource.PlayOneShot(clip);
     }
 
 }

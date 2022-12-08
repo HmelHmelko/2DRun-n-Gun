@@ -1,3 +1,4 @@
+using Cinemachine;
 using Cinemachine.Utility;
 using Interfaces;
 using System.Collections;
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private LayerMask groundedLayerMask;
     [SerializeField] private LayerMask damageLayers;
     [SerializeField] private UIHealth uiHealth;
+    [SerializeField] private CameraShake cameraShake;
     private Damager damager;
     #endregion
 
@@ -300,6 +302,7 @@ public class Player : MonoBehaviour, IDamageable
             isInvincible = true;
             currentHealth = currentHealth - amount;
             rb2D.AddForce(new Vector2(currentVelocity.x, playerData.knockBackImpulse), ForceMode2D.Impulse);
+            cameraShake.HitShake();
             animator.SetTrigger(hitted);
             uiHealth.UpdateHealth();
         }
@@ -311,7 +314,6 @@ public class Player : MonoBehaviour, IDamageable
             if (coll2D.IsTouchingLayers(damageLayers) && !stateMachine.currentState.Equals(dashState))
             {
                 invinciblePostTimer = playerData.timeInvincible;
-                isInvincible = true;
             }
             else if (!coll2D.IsTouchingLayers(damageLayers))
             {
@@ -330,7 +332,6 @@ public class Player : MonoBehaviour, IDamageable
         {
             isInvincible = false;
         }
-
     }
     private void Death()
     {
@@ -353,11 +354,12 @@ public class Player : MonoBehaviour, IDamageable
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        damager.AddToDetected(collision);
+        
         if (!stateMachine.currentState.Equals(dashState))
         {
             StartCoroutine(SpriteFlick());
         }
-        damager.AddToDetected(collision);
     }
     private void OnTriggerStay2D(Collider2D collision)
     {

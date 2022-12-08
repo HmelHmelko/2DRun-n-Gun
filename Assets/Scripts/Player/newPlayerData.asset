@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterMaxHealth: 4
   timeInvincible: 1
-  knockBackImpulse: 5
+  knockBackImpulse: 2
   flickTime: 0.35
-  movementVelocity: 5
+  movementVelocity: 0
   jumpVelocity: 10
   numberOfJumps: 1
   dashTime: 0.4

@@ -15,8 +15,8 @@ TagManager:
   - 
   - Character
   - Platforms
-  - 
-  - 
+  - CharacterDamage
+  - DashDamageable
   - 
   - Enemy
   - Damager

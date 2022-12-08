@@ -6,18 +6,24 @@ public class Collector : MonoBehaviour
 {
     private List<ICollectable> detectedCollectable = new List<ICollectable>();
 
+    private Player player;
+
     [Header("Gems")]
     [SerializeField] private float gemAmount = 20.0f;
+    [SerializeField] private float richGemAmount = 40.0f;
     [SerializeField] private TMP_Text gemsConterUI;
     private float gemAmountSumm;
-    private int gemCount = 0;
     private CollectableGem collectableGem;
 
     public float gems { get { return gemAmountSumm; } }
 
     [Header("Keys")]
-    [SerializeField] private float keysAmount = 50.0f;
+    [SerializeField] private float keyAmount = 50.0f;
+    [SerializeField] private GameObject[] keys;
     private int keyCount = 0;
+    private CollectableKey collectableKey;
+
+    protected readonly int hashActivePara = Animator.StringToHash("Active");
 
     private void Update()
     {
@@ -61,11 +67,29 @@ public class Collector : MonoBehaviour
         
         if (collectableGem != null)
         {
-            gemCount++;
             AddToCollected(collision);
             CheckForCollectAmount(gemAmount);
             gemAmountSumm += gemAmount;
             RemoveFromCollected(collision);
         }
+
     }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        collectableKey = collision.GetComponent<CollectableKey>();
+
+        if (collectableKey != null && collectableKey.keyCollider.isTrigger)
+        {
+            AddToCollected(collision);
+            CheckForCollectAmount(keyAmount);
+            keys[keyCount].GetComponent<Animator>().SetBool(hashActivePara, true);
+            keyCount += 1;
+            gemAmountSumm += keyAmount;
+            RemoveFromCollected(collision);
+        }
+
+    }
+
 }
+

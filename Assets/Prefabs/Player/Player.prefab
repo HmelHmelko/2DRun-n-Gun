@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6013668829542544576}
   - component: {fileID: 3551612382453581427}
-  m_Layer: 14
+  m_Layer: 10
   m_Name: dashDamageZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -514,8 +514,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gemAmount: 20
-  gemsConterUI: {fileID: 6664588363556314560, guid: d0f48226f2a0df34180d2957c1d8fafe, type: 3}
-  keysAmount: 50
+  richGemAmount: 40
+  gemsConterUI: {fileID: 0}
+  keyAmount: 50
+  keys:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &2004242433020094965
 GameObject:
   m_ObjectHideFlags: 0

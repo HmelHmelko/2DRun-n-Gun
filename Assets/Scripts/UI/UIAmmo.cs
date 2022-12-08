@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIAmmo : MonoBehaviour
 {
     [SerializeField] private PlayerShoot playerShoot;
+    [SerializeField] private CameraShake cameraShake;
     private Slider mainAmmoSlider;
 
     private float minAmmoValue;

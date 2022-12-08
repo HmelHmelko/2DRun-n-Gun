@@ -18,5 +18,5 @@ MonoBehaviour:
   weaponClip: 12
   realoadTime: 1
   activeReloadValue: 1
-  autoDestructTime: 1
+  autoDestructTime: 0.9
   weaponDamage: 1
