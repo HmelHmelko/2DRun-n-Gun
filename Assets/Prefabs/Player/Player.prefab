@@ -233,7 +233,8 @@ MonoBehaviour:
   damageLayers:
     serializedVersion: 2
     m_Bits: 24576
-  uiHealth: {fileID: 8123943624889430142, guid: e57f30bbab22ecb469f61a0be8ca916b, type: 3}
+  uiHealth: {fileID: 0}
+  cameraShake: {fileID: 0}
   groundedRaycastDistance: 0.5
   currentCDDash: 0
 --- !u!114 &2004242432338993887
@@ -355,6 +356,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: c9f637f5-5e0f-4a87-a290-6c504e7a0b9f
     m_ActionName: Gameplay/SecondaryShoot[/Mouse/rightButton,/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f11aecee-802b-47cc-b3ac-ade61cb862bb
+    m_ActionName: Gameplay/EscPause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: MouseKeyborad
   m_DefaultActionMap: Gameplay
@@ -376,6 +381,7 @@ MonoBehaviour:
   shootPosition: {fileID: 5552349345767171896}
   bulletParticle: {fileID: 6574235315930898871}
   applySound: {fileID: 6786498106626283356}
+  cameraShake: {fileID: 0}
   shootClips:
   - {fileID: 8300000, guid: 81448fec9f15a4b5c87004cff6ad1d44, type: 3}
   reloadTimer: 0

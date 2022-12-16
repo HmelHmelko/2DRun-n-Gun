@@ -172,6 +172,7 @@ public class Player : MonoBehaviour, IDamageable
                 raycastPositions[0] = raycastStart + Vector2.left * 0.4f;
                 raycastPositions[1] = raycastStart;
                 raycastPositions[2] = raycastStart + Vector2.right * 0.4f;
+
             }
             else
             {
@@ -195,6 +196,7 @@ public class Player : MonoBehaviour, IDamageable
                 raycastPositions[0] = raycastStartBottomCentre + Vector2.left * coll2D.size.x * 0.5f;
                 raycastPositions[1] = raycastStartBottomCentre;
                 raycastPositions[2] = raycastStartBottomCentre + Vector2.right * coll2D.size.x * 0.5f;
+
             }
             else
             {
@@ -258,10 +260,10 @@ public class Player : MonoBehaviour, IDamageable
 
                 if (coll2D != null)
                 {
-                    if (groundColliders[1] != null)
+                    if (groundColliders[0] != null)
                     {
                         float capsuleBottomHeight = rb2D.position.y + coll2D.offset.y - coll2D.size.y * 0.5f;
-                        float middleHitHeight = foundHits[1].point.y;
+                        float middleHitHeight = foundHits[0].point.y;
                         IsGrounded &= middleHitHeight < capsuleBottomHeight + groundedRaycastDistance;
                     }
                 }
@@ -272,6 +274,7 @@ public class Player : MonoBehaviour, IDamageable
         {
             hitBuffer[i] = new RaycastHit2D();
         }
+
     }
     public void CheckDashCooldown()
     {
