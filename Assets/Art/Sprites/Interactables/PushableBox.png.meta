@@ -43,14 +43,14 @@ TextureImporter:
     aniso: 1
     mipBias: 0
     wrapU: 1
-    wrapV: 0
-    wrapW: 0
+    wrapV: 1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
   spriteMode: 2
-  spriteExtrude: 1
-  spriteMeshType: 1
+  spriteExtrude: 0
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 220
@@ -150,10 +150,10 @@ TextureImporter:
       name: PushableBox_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 588
-        height: 512
+        x: 90
+        y: 39
+        width: 414
+        height: 400
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,12 +171,12 @@ TextureImporter:
       name: PushableBox_1
       rect:
         serializedVersion: 2
-        x: 587
-        y: 0
-        width: 436
-        height: 512
-      alignment: 9
-      pivot: {x: 0.49042785, y: 0.4797646}
+        x: 597
+        y: 40
+        width: 414
+        height: 400
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

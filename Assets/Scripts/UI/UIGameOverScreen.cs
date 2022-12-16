@@ -22,7 +22,7 @@ public class UIGameOverScreen : MonoBehaviour
 
     public void RestartButton()
     {
-
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene("_TestScene", LoadSceneMode.Single);
         Time.timeScale = 1.0f;
     }
