@@ -15,12 +15,14 @@ public class Collector : MonoBehaviour
     private float gemAmountSumm;
     private CollectableGem collectableGem;
 
+    private const string saveKey = "mainSave";
+
     public float gems { get { return gemAmountSumm; } }
 
     [Header("Keys")]
     [SerializeField] private float keyAmount = 50.0f;
     [SerializeField] private GameObject[] keys;
-    private int keyCount = 0;
+    public int keyCount;
     private CollectableKey collectableKey;
 
     protected readonly int hashActivePara = Animator.StringToHash("Active");
@@ -35,7 +37,6 @@ public class Collector : MonoBehaviour
 
         if (collectable != null)
         {
-            Debug.Log("add to dected" + collectable);
             detectedCollectable.Add(collectable);
         }
     }
@@ -45,7 +46,6 @@ public class Collector : MonoBehaviour
 
         if (collectable != null)
         {
-            Debug.Log("remove to dected" + collectable);
             detectedCollectable.Remove(collectable);
         }
     }
@@ -88,8 +88,6 @@ public class Collector : MonoBehaviour
             gemAmountSumm += keyAmount;
             RemoveFromCollected(collision);
         }
-
     }
-
 }
 

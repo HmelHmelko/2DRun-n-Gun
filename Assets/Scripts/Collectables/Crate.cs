@@ -1,3 +1,5 @@
+using Kino;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -6,6 +8,7 @@ public class Crate : MonoBehaviour, IDamageable
     private int hp = 1;
     [SerializeField] GameObject gemPrefab;
     [SerializeField] Transform spawn;
+    [SerializeField] ParticleSystem boom;
 
     private Vector3 spawnPos;
     private void Start()
@@ -29,6 +32,9 @@ public class Crate : MonoBehaviour, IDamageable
 
     private void Destruct()
     {
+        Instantiate(boom, spawnPos, Quaternion.identity);
+        //boom.Play();
         Instantiate(gemPrefab, spawnPos, Quaternion.identity);
     }
+
 }

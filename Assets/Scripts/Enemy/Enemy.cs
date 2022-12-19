@@ -41,7 +41,6 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        SetVelocity(-4);
         currentVelocity = enemyRB.velocity;
 
         if (EnemyHealth <= 0)

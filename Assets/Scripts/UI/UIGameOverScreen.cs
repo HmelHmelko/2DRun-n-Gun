@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 public class UIGameOverScreen : MonoBehaviour
 {
     public bool gameOnPause { get; private set; }
+
+    private void Awake()
+    {
+        gameOnPause = false;
+    }
     public void EnableScreen()
     {
         Time.timeScale = 0.0f;
@@ -29,7 +34,7 @@ public class UIGameOverScreen : MonoBehaviour
 
     public void ExitButton()
     {
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
     public void BackButton()

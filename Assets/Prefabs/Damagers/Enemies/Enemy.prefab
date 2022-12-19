@@ -248,7 +248,8 @@ MonoBehaviour:
   hp: 2
   damage: 1
   shadow: {fileID: 3504512029754141944}
-  cameraShake: {fileID: 326086523638590508, guid: 142eae5c777c31141883621fcbd68fd7, type: 3}
+  hit: {fileID: 0}
+  cameraShake: {fileID: 0}
 --- !u!95 &4330394788669176029
 Animator:
   serializedVersion: 4
